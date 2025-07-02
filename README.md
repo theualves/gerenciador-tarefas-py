@@ -37,6 +37,6 @@ O projeto tem como finalidade aplicar os conceitos de:
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git
-   cd NOME_DO_REPOSITORIO
+   git clone https://github.com/theualves/gerenciador-tarefas-py.git
+   cd gerenciador-tarefas-py
    ```
