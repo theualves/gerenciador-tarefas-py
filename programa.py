@@ -42,7 +42,9 @@ def listar_tarefa(conexao):
   if len(tarefas) > 0:
     for tarefa in tarefas:
       print(f"\nID: {tarefa[0]} \nNome da Tarefa: {tarefa[1]} \nDescrição: {tarefa[2]} \nData de Vencimento: {tarefa[3]} \nStatus: {tarefa[4]}")
-
+  else:
+    print("Nenhuma tarefa foi adicionada")
+    
 def main():
   conexao = criar_conexao()
   criar_tabela(conexao)
