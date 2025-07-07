@@ -34,6 +34,15 @@ def adicionar_tarefa(conexao, nome_tarefa, descricao, data_vencimento):
   except ValueError:
     print("ERRO! verifique coloque a data nesse formato (AAAA-MM-DD)")
 
+
+def listar_tarefa(conexao):
+  cursor = conexao.cursor()
+  cursor.execute('SELECT * FROM tarefas')
+  tarefas = cursor.fetchall()
+  if len(tarefas) > 0:
+    for tarefa in tarefas:
+      print(f"\nID: {tarefa[0]} \nNome da Tarefa: {tarefa[1]} \nDescrição: {tarefa[2]} \nData de Vencimento: {tarefa[3]} \nStatus: {tarefa[4]}")
+
 def main():
   conexao = criar_conexao()
   criar_tabela(conexao)
@@ -41,7 +50,8 @@ def main():
   while True:
     print("--------- GERENCIADOR DE TAREFAS ------------")
     print("1. Adicionar uma tarefa")
-    print("2. Sair do programa")
+    print("2. Listar tarefas")
+    print("3. Sair do programa")
     escolha = input("Escolha uma opção: ")
 
     if escolha == '1':
@@ -49,7 +59,9 @@ def main():
       descricao = input("Digite a descrição da tarefa: ")
       data_vencimento = input("Digite a data de vencimento (AAAA-MM-DD): ")
       adicionar_tarefa(conexao, nome_tarefa, descricao, data_vencimento)
-    elif escolha == '2':
+    if escolha == '2':
+      listar_tarefa(conexao)
+    elif escolha == '3':
       break
 
 if __name__ == "__main__":
