@@ -39,11 +39,7 @@ def listar_tarefa(conexao):
   cursor = conexao.cursor()
   cursor.execute('SELECT * FROM tarefas')
   tarefas = cursor.fetchall()
-  if len(tarefas) > 0:
-    for tarefa in tarefas:
-      print(f"\nID: {tarefa[0]} \nNome da Tarefa: {tarefa[1]} \nDescrição: {tarefa[2]} \nData de Vencimento: {tarefa[3]} \nStatus: {tarefa[4]}")
-  else:
-    print("Nenhuma tarefa foi adicionada")
+  return tarefas
     
 def filtrar_tarefas(conexao):
     cursor = conexao.cursor()
