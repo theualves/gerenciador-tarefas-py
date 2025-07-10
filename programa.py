@@ -30,83 +30,49 @@ def adicionar_tarefa(conexao, nome_tarefa, descricao, data_vencimento):
         INSERT INTO tarefas(nome_tarefa, descricao, data_vencimento, status)
         VALUES (?,?,?,?) ''',(nome_tarefa, descricao, data_vencimento, status))
     conexao.commit()
-    print("Adicionada com sucesso!")
+    return True
   except ValueError:
     print("ERRO! verifique coloque a data nesse formato (AAAA-MM-DD)")
+    return False
 
+def deletar_tarefa(conexao, id_tarefa):
+   cursor = conexao.cursor()
+   try:
+      cursor.execute('DELETE FROM tarefas WHERE id = ?', (id_tarefa,))
+      conexao.commit()
+      return cursor.rowcount > 0
+   except sqlite3.Error as e:
+      print("Erro ao deletar uma tarefa: {e}")
+      return False
 
 def listar_tarefa(conexao):
-  cursor = conexao.cursor()
-  cursor.execute('SELECT * FROM tarefas')
-  tarefas = cursor.fetchall()
-  return tarefas
-    
-def filtrar_tarefas(conexao):
     cursor = conexao.cursor()
-    print("\nFiltrar por:")
-    print("1. Status")
-    print("2. Data")
-    print("3. Nome")
-    opcao = input("Escolha uma opção: ")
+    cursor.execute('SELECT * FROM tarefas')
+    tarefas = cursor.fetchall()
+    return tarefas
 
-    if opcao == '1':
-        criterio = "Status"
-        valor = input("Digite o status (pendente ou concluído): ")
-    elif opcao == '2':
-        criterio = "Data"
-        valor = input("Digite a data de vencimento (AAAA-MM-DD): ")
-    elif opcao == '3':
-        criterio = "Nome"
-        valor = input("Digite parte do nome da tarefa: ")
-    else:
-        print("Opção inválida.")
-        return
-
-    if criterio == "Status":
-        cursor.execute('SELECT * FROM tarefas WHERE status = ?', (valor,))
-    elif criterio == "Data":
-        cursor.execute('SELECT * FROM tarefas WHERE data_vencimento = ?', (valor,))
-    elif criterio == "Nome":
-        cursor.execute('SELECT * FROM tarefas WHERE nome_tarefa LIKE ?', (f"%{valor}%",))
-
-    resultados = cursor.fetchall()
-
-    if resultados:
-        print("\nResultados do filtro:")
-        for tarefa in resultados:
-            print(f"\nID: {tarefa[0]}")
-            print(f"Nome da Tarefa: {tarefa[1]}")
-            print(f"Descrição: {tarefa[2]}")
-            print(f"Data de Vencimento: {tarefa[3]}")
-            print(f"Status: {tarefa[4]}")
-    else:
-        print("Nenhuma tarefa encontrada com esse filtro.")
-
-def main():
-    conexao = criar_conexao()
-    criar_tabela(conexao)
-
-    while True:
-        print("\n--------- GERENCIADOR DE TAREFAS ------------")
-        print("1. Adicionar uma tarefa")
-        print("2. Listar tarefas")
-        print("3. Sair do programa")
-        print("4. Filtrar tarefa")
-        escolha = input("Escolha uma opção: ")
-
-        if escolha == '1':
-            nome_tarefa = input("\nDigite o nome da tarefa: ")
-            descricao = input("Digite a descrição da tarefa: ")
-            data_vencimento = input("Digite a data de vencimento (AAAA-MM-DD): ")
-            adicionar_tarefa(conexao, nome_tarefa, descricao, data_vencimento)
-        elif escolha == '2':
-            listar_tarefa(conexao)
-        elif escolha == '3':
-            break
-        elif escolha == '4':
-            filtrar_tarefas(conexao)
+def marcar_concluido(conexao, id_tarefa):
+    cursor = conexao.cursor()
+    novo_status = 'concluido'
+    try:
+        cursor.execute('UPDATE tarefas SET status = ? where id = ?',(novo_status, id_tarefa))
+        conexao.commit()
+        if cursor.rowcount > 0:
+           print(f"A tarefa: {id_tarefa} marcada como concluida com sucesso!")
+           return True
         else:
-            print("Opção inválida. Tente novamente.")
-
-if __name__ == "__main__":
-    main()
+           print(f"Erro! Nenhuma tarefa com ID:{id_tarefa} foi encontrada!")
+           return False
+    except sqlite3.Error as e:
+       print(f"Erro ao atualizar a tarefa: {e}")
+       return False
+    
+def filtrar_tarefa(conexao, status):
+   cursor = conexao.cursor()
+   try:
+      cursor.execute('SELECT * FROM tarefas WHERE status = ?', (status,))
+      tarefas_filtradas = cursor.fetchall()
+      return tarefas_filtradas
+   except sqlite3.Error as e:
+      print(f"Erro ao filtrar a tarefa por status: {e}")
+      return []
