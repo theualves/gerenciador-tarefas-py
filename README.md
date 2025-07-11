@@ -6,11 +6,11 @@ Projeto simples de gerenciamento de tarefas desenvolvido em **Python** com **SQL
 
 ## ✅ Funcionalidades
 
-- Adicionar tarefas com **descrição** e **data de vencimento**
+- Adicionar tarefas com **nome**, **descrição** e **data de vencimento**
 - Marcar tarefas como **concluídas**
 - Filtrar tarefas por **status** (pendente ou concluída)
 - Armazenamento local usando **SQLite**
-- Interface simples (terminal ou gráfica)
+- Interface simples
 
 ---
 
@@ -18,7 +18,15 @@ Projeto simples de gerenciamento de tarefas desenvolvido em **Python** com **SQL
 
 - Python 3
 - SQLite
-- (Opcional) Tkinter ou PyQt5, se interface gráfica for implementada
+- Tkinter
+
+---
+
+## 👥 Membros da equipe
+
+- **Matheus Alves**
+- **Filipe Xavier**
+- **Arthur Filipe**
 
 ---
 
@@ -39,4 +47,4 @@ O projeto tem como finalidade aplicar os conceitos de:
    ```bash
    git clone https://github.com/theualves/gerenciador-tarefas-py.git
    cd gerenciador-tarefas-py
-   ```
+   python interface.py
